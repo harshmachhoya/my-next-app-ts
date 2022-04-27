@@ -19,10 +19,10 @@ const Blog = (props: IPropDataArray) => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        {Blogs.map((blogitem: IBlog) => {
+        {Blogs.map(({ id, attributes: blogitem }: IBlog) => {
           return (
-            <div key={blogitem.slug}>
-              <Link href={`/blogpost/${blogitem.slug}`} passHref>
+            <div key={id}>
+              <Link href={`/blogpost/${id}`} passHref>
                 <h3 className={styles.blogItemh3}>{blogitem.title}</h3>
               </Link>
               <p className={styles.blogItemhp}>
@@ -42,31 +42,30 @@ const Blog = (props: IPropDataArray) => {
  * This gets called on every request
  *
  */
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   // Fetch data from external API
-//   const res = await fetch(`http://localhost:3000/api/blogs`);
-//   const allBlogs = await res.json();
-
-//   // Pass allBlogs to the page via props
-//   return { props: { allBlogs } };
-// };
+export const getServerSideProps: GetServerSideProps = async () => {
+  // Fetch data from external API
+  const res = await fetch(`http://localhost:1337/api/posts`);
+  const { data: allBlogs } = await res.json();
+  // Pass allBlogs to the page via props
+  return { props: { allBlogs } };
+};
 
 /**
  *
  * Static Site Generation
  *
  */
-export const getStaticProps: GetStaticProps = async (context) => {
-  let data = await fs.promises.readdir("blogdata");
-  let myfile;
-  let allBlogs: Array<IBlog> = [];
-  for (let i = 0; i < data.length; i++) {
-    const item = data[i];
-    myfile = await fs.promises.readFile("blogdata/" + item, "utf-8");
-    allBlogs.push(JSON.parse(myfile));
-  }
-  return { props: { allBlogs } };
-};
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   let data = await fs.promises.readdir("blogdata");
+//   let myfile;
+//   let allBlogs: Array<IBlog> = [];
+//   for (let i = 0; i < data.length; i++) {
+//     const item = data[i];
+//     myfile = await fs.promises.readFile("blogdata/" + item, "utf-8");
+//     allBlogs.push(JSON.parse(myfile));
+//   }
+//   return { props: { allBlogs } };
+// };
 
 // NOTE: Comment any of one rendering function
 

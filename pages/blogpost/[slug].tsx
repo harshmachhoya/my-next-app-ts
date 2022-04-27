@@ -13,14 +13,14 @@ import * as fs from "fs";
  *
  */
 const Slug = (props: IPropData) => {
-  const [Blog] = useState(props.myBlog);
+  const [Blog] = useState(props.myBlog.attributes);
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <h1>{Blog && Blog.title}</h1>
         <hr />
-        <div>{Blog && Blog.content}</div>
+        <p className={styles.p}>{Blog && Blog.content}</p>
       </main>
     </div>
   );
@@ -32,42 +32,42 @@ const Slug = (props: IPropData) => {
  * This gets called on every request
  *
  */
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   // Fetch data from external API
-//   const res = await fetch(
-//     `http://localhost:3000/api/getblog?slug=${context.query.slug}`
-//   );
-//   const myBlog = await res.json();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Fetch data from external API
+  const res = await fetch(
+    `http://localhost:1337/api/posts/${context.query.slug}`
+  );
+  const { data: myBlog } = await res.json();
 
-//   // Pass myBlog to the page via props
-//   return { props: { myBlog } };
-// };
+  // Pass myBlog to the page via props
+  return { props: { myBlog } };
+};
 
 /**
  *
  * Static Site Generation
  *
  */
-export const getStaticPaths: GetStaticPaths = async () => {
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return {
-    paths: [
-      { params: { slug: "how-to-learn-flask" } },
-      { params: { slug: "how-to-learn-javascript" } },
-      { params: { slug: "how-to-learn-nextjs" } },
-    ],
-    fallback: true,
-  };
-};
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   // We'll pre-render only these paths at build time.
+//   // { fallback: false } means other routes should 404.
+//   return {
+//     paths: [
+//       { params: { slug: "how-to-learn-flask" } },
+//       { params: { slug: "how-to-learn-javascript" } },
+//       { params: { slug: "how-to-learn-nextjs" } },
+//     ],
+//     fallback: true,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const slug = context.params?.slug;
-  let myBlog = await fs.promises.readFile(`blogdata/${slug}.json`, "utf-8");
-  return {
-    props: { myBlog: JSON.parse(myBlog) },
-  };
-};
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const slug = context.params?.slug;
+//   let myBlog = await fs.promises.readFile(`blogdata/${slug}.json`, "utf-8");
+//   return {
+//     props: { myBlog: JSON.parse(myBlog) },
+//   };
+// };
 
 // NOTE: Comment any of one rendering function
 
