@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IBlog, IPropDataArray } from "../interfaces/blog.interface";
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import * as fs from "fs";
+import BlogPrview from "../components/BlogPreview";
 
 // NOTE: Comment any of one rendering function
 
@@ -17,21 +18,9 @@ const Blog = (props: IPropDataArray) => {
   const [Blogs, setBlogs] = useState(props.allBlogs);
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        {Blogs.map(({ id, attributes: blogitem }: IBlog) => {
-          return (
-            <div key={id}>
-              <Link href={`/blogpost/${id}`} passHref>
-                <h3 className={styles.blogItemh3}>{blogitem.title}</h3>
-              </Link>
-              <p className={styles.blogItemhp}>
-                {blogitem.content.substring(0, 200)}...
-              </p>
-            </div>
-          );
-        })}
-      </main>
+    <div className={styles.blogPage}>
+      <h2>All Blogs</h2>
+      <BlogPrview allBlogs={Blogs} />
     </div>
   );
 };

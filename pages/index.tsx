@@ -1,11 +1,13 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
+import LatestBlogs from "../components/LatestBlogs";
+import { IPropDataArray } from "../interfaces/blog.interface";
 // import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
+const Home = (props: IPropDataArray) => {
   return (
-    <div className={styles.container}>
+    <div>
       <style jsx>
         {`
           h2 {
@@ -40,28 +42,26 @@ const Home: NextPage = () => {
             alt="Home image"
           />
         </div>
-
         <p className={styles.description}>Let`s start with hunting coder</p>
-        <div className="blogs">
-          <h2>Popular Blogs</h2>
-          <div className="blogItem">
-            <h3>How to learn JavaScript in 2022?</h3>
-            <p>JavaScript is the language used to design logic for the web</p>
-          </div>
-          <div className="blogItem">
-            <h3>How to learn JavaScript in 2022?</h3>
-            <p>JavaScript is the language used to design logic for the web</p>
-          </div>
-          <div className="blogItem">
-            <h3>How to learn JavaScript in 2022?</h3>
-            <p>JavaScript is the language used to design logic for the web</p>
-          </div>
-        </div>
+        <LatestBlogs allBlogs={props.allBlogs} />
       </main>
-
       <footer className={styles.footer}></footer>
     </div>
   );
 };
 
 export default Home;
+
+/**
+ *
+ * Server Side Generation
+ * This gets called on every request
+ *
+ */
+export const getServerSideProps: GetServerSideProps = async () => {
+  // Fetch data from external API
+  const res = await fetch(`http://localhost:1337/api/posts`);
+  const { data: allBlogs } = await res.json();
+  // Pass allBlogs to the page via props
+  return { props: { allBlogs } };
+};

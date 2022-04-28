@@ -1,7 +1,7 @@
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import React, { useEffect, useState } from "react";
 import { useRouter as NRouter } from "next/router";
-import styles from "../../styles/BlogPost.module.css";
+import styles from "../../styles/Blog.module.css";
 import { IBlog, IPropData } from "../../interfaces/blog.interface";
 import * as fs from "fs";
 // NOTE: Comment any of one rendering function
@@ -16,12 +16,10 @@ const Slug = (props: IPropData) => {
   const [Blog] = useState(props.myBlog.attributes);
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1>{Blog && Blog.title}</h1>
-        <hr />
-        <p className={styles.p}>{Blog && Blog.content}</p>
-      </main>
+    <div className={styles.blogPage}>
+      <h1>{Blog && Blog.title}</h1>
+      <hr />
+      <p>{Blog && Blog.content}</p>
     </div>
   );
 };
