@@ -20,6 +20,14 @@ const Slug = (props: IPropData) => {
       <h1>{Blog && Blog.title}</h1>
       <hr />
       <p>{Blog && Blog.content}</p>
+      <div className={styles.subContent}>
+        <h4>Author:</h4>
+        <p>{Blog && Blog.author}</p>
+      </div>
+      <div className={styles.subContent}>
+        <h4>Last Updated:</h4>
+        <p>{Blog && new Date(Blog.updatedAt).toUTCString()}</p>
+      </div>
     </div>
   );
 };

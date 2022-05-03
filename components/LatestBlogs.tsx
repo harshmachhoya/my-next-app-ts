@@ -5,15 +5,10 @@ import { IPropDataArray, IBlog } from "../interfaces/blog.interface";
 import BlogPrview from "./BlogPreview";
 
 const LatestBlogs = ({ allBlogs }: IPropDataArray) => {
-  const [LatestBlogs, setLatestBlogs] = useState<IBlog[]>([]);
-  useEffect(() => {
-    setLatestBlogs(allBlogs.slice(0, 5));
-  }, [allBlogs]);
-
   return (
     <div>
       <h2>Latest Blogs</h2>
-      <BlogPrview allBlogs={LatestBlogs} />
+      <BlogPrview allBlogs={allBlogs} />
     </div>
   );
 };

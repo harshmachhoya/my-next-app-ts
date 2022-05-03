@@ -13,3 +13,11 @@
   max-width: 70vw;
   margin-left: 2rem;
 }
+
+.subContent {
+  display: flex;
+}
+
+.subContent p {
+  padding: 0.3rem;
+}
