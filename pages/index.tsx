@@ -8,7 +8,6 @@ import styles from "../styles/Home.module.css";
 import NextImage from "../components/Image";
 
 const Home = (props: IIndexPage) => {
-  console.log(props);
   return (
     <div>
       {/* <style jsx>
@@ -35,7 +34,7 @@ const Home = (props: IIndexPage) => {
             className={styles.myImg}
             width={237}
             height={158}
-            alternativeText="Home image"
+            alternativetext="Home image"
             url={props.homePage.attributes.photo.data.attributes.url}
           />
           {/* <Image

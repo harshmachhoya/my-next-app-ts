@@ -8,7 +8,7 @@ export interface IIndexPage {
 export interface IMedia {
     className: string,
     url: string,
-    alternativeText: string,
+    alternativetext: string,
     width: number,
     height: number,
     layout: "fixed" | "fill" | "intrinsic" | "responsive" | "raw" | undefined

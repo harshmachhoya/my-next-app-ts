@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { IMedia } from "../interfaces/common.interface";
 
 const NextImage = (props: IMedia) => {
-  const { width, height, url, alternativeText, layout } = props;
+  const { width, height, url, alternativetext, layout } = props;
   const loader = ({ src }: { src: string }): string => {
     return getStrapiMedia(src);
   };
@@ -12,7 +12,7 @@ const NextImage = (props: IMedia) => {
   // The image has a fixed width and height
   if (width && height) {
     return (
-      <Image loader={loader} src={url} alt={alternativeText || ""} {...props} />
+      <Image loader={loader} src={url} alt={alternativetext || ""} {...props} />
     );
   }
 
@@ -25,7 +25,7 @@ const NextImage = (props: IMedia) => {
       height={height}
       objectFit="contain"
       src={url}
-      alt={alternativeText || ""}
+      alt={alternativetext || ""}
     />
   );
 };
