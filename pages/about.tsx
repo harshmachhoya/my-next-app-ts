@@ -26,7 +26,7 @@ export async function getStaticProps() {
   const { data, loading, error } = await apolloCon.query({
     query: GET_ABOUT_PAGE,
   });
-  console.log(JSON.stringify(data.aboutPage.data.attributes, null, 4));
+  // console.log(JSON.stringify(data.aboutPage.data.attributes, null, 4));
 
   return { props: { aboutPageData: data.aboutPage.data.attributes } };
 }

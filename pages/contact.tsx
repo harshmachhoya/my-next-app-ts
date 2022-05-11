@@ -1,113 +1,123 @@
+import { gql } from "@apollo/client";
+import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import styles from "../styles/Contact.module.css";
+import { apolloCon } from "../apolloCon";
 
 const Contact = () => {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
-  const [desc, setdesc] = useState("");
+  const [message, setmessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(phone, name, email, desc);
-    const data = { phone, name, email, desc };
+    const data = { name, phone, email, message };
+    console.log("Body", data);
 
-    fetch("http://localhost:3000/api/postcontact", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Success:", data);
-        alert("Thanks for contacting us");
-        setphone("");
-        setname("");
-        setdesc("");
-        setemail("");
+    apolloCon
+      .mutate({
+        mutation: gql`
+          mutation (
+            $name: String
+            $email: String
+            $phone: String
+            $message: String
+          ) {
+            createContactUs(
+              data: {
+                name: $name
+                email: $email
+                phone: $phone
+                message: $message
+              }
+            ) {
+              data {
+                id
+              }
+            }
+          }
+        `,
+        variables: { ...data },
       })
-      .catch((error) => {
-        console.error("Error:", error);
+      .then((d) => {
+        console.log("Success response:", d);
+        handleReset();
+        alert("Thanks for contacting us");
+      })
+      .catch((e) => {
+        console.log("Error", e);
       });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     if (e.target.name == "phone") {
       setphone(e.target.value);
     } else if (e.target.name == "email") {
       setemail(e.target.value);
-    } else if (e.target.name == "desc") {
-      setdesc(e.target.value);
+    } else if (e.target.name == "message") {
+      setmessage(e.target.value);
     } else if (e.target.name == "name") {
       setname(e.target.value);
     }
+  };
+
+  const handleReset = () => {
+    setphone("");
+    setname("");
+    setmessage("");
+    setemail("");
   };
 
   return (
     <div className={styles.container}>
       <h1>Contact Us</h1>
       <form onSubmit={handleSubmit}>
-        <div className={styles.mb3}>
-          <label htmlFor="name" className={styles.formlabel}>
-            Enter your name
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={handleChange}
-            className="form-control"
-            id="name"
-            name="name"
-            aria-describedby="emailHelp"
-          />
-        </div>
-        <div className={styles.mb3}>
-          <label htmlFor="email" className={styles.formlabel}>
-            Email address
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={handleChange}
-            className="form-control"
-            name="email"
-            id="email"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text">
-            We will never share your email with anyone else.
-          </div>
-        </div>
-        <div className={styles.mb3}>
-          <label htmlFor="phone" className={styles.formlabel}>
-            Phone
-          </label>
-          <input
-            type="phone"
-            value={phone}
-            onChange={handleChange}
-            className="form-control"
-            name="phone"
-            id="phone"
-          />
-        </div>
-        <div className={styles.mb3}>
-          <label htmlFor="desc">Elaborate your concern</label>
-          <textarea
-          rows={3}
-            value={desc}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="Write your concern here"
-            name="desc"
-            id="desc"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
+        <TextField
+          className={styles.formFields}
+          label="Full Name"
+          value={name}
+          onChange={handleChange}
+          name="name"
+          fullWidth
+          autoComplete="none"
+        />
+        <TextField
+          className={styles.formFields}
+          label="Email"
+          value={email}
+          onChange={handleChange}
+          name="email"
+          fullWidth
+          autoComplete="none"
+        />
+        <TextField
+          className={styles.formFields}
+          label="Phone"
+          value={phone}
+          onChange={handleChange}
+          name="phone"
+          fullWidth
+          autoComplete="none"
+        />
+        <TextField
+          className={styles.formFields}
+          label="Message"
+          value={message}
+          onChange={handleChange}
+          name="message"
+          fullWidth
+          multiline
+          rows={5}
+          autoComplete="none"
+        />
+        <Button variant="contained" type="submit">
           Submit
-        </button>
+        </Button>
+        &nbsp;
+        <Button variant="contained" onClick={handleReset}>Reset</Button>
       </form>
     </div>
   );

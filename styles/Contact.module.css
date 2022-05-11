@@ -1,12 +1,19 @@
-.container{
-    max-width: 45vw;
+.container {
+    max-width: max-content;
     margin: auto;
 }
 
-.mb3{
-    margin-bottom: 21px;
+.formFields {
+   padding-bottom: 1rem;
 }
 
-.formlabel{
+
+.formlabel {
     margin: 0px 14px;
-} 
+}
+
+/* @media (max-width: 600px) {
+    .container {
+        margin: auto;
+    }
+} */
