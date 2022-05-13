@@ -61,11 +61,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`http://localhost:1337/api/posts`);
   const { data: myBlog } = await res.json();
   const paths = myBlog.map((blog: IBlog) => {
-    return { params: { slug: blog.id.toString() } };
+    return { params: { slug: blog.attributes.slug } };
   });
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
   // // With static JSON file
   //   return {
@@ -81,8 +81,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   // // With Strapi API
   // Fetch data from external API
+  console.log(context.params?.slug)
   const res = await fetch(
-    `http://localhost:1337/api/posts/${context.params?.slug}`
+    `http://localhost:1337/api/posts/slug/${context.params?.slug}`
   );
   const { data: myBlog } = await res.json();
   return {

@@ -9,7 +9,7 @@ const BlogPrview = ({ allBlogs }: IPropDataArray) => {
       {allBlogs.map(({ id, attributes: blogitem }: IBlog) => {
         return (
           <div key={id}>
-            <Link href={`/blogpost/${id}`} passHref>
+            <Link href={`/blogpost/${blogitem.slug}`} passHref>
               <a>
                 <h3 className={styles.blogItemh3}>{blogitem.title}</h3>
               </a>
