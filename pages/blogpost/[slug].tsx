@@ -4,6 +4,7 @@ import { useRouter as NRouter } from "next/router";
 import styles from "../../styles/Blog.module.css";
 import { IBlog, IPropData } from "../../interfaces/blog.interface";
 import * as fs from "fs";
+import { NextSeo } from "next-seo";
 // NOTE: Comment any of one rendering function
 
 /**
@@ -14,21 +15,28 @@ import * as fs from "fs";
  */
 const Slug = (props: IPropData) => {
   const [Blog] = useState(props.myBlog.attributes);
+  const SEO = {
+    title: props.myBlog.attributes.title,
+    titleTemplate: "Blogs | %s",
+  };
 
   return (
-    <div className={styles.blogPage}>
-      <h1>{Blog && Blog.title}</h1>
-      <hr />
-      <p>{Blog && Blog.content}</p>
-      <div className={styles.subContent}>
-        <h4>Author:</h4>
-        <p>{Blog && Blog.author}</p>
+    <>
+      <NextSeo {...SEO} />
+      <div className={styles.blogPage}>
+        <h1>{Blog && Blog.title}</h1>
+        <hr />
+        <p>{Blog && Blog.content}</p>
+        <div className={styles.subContent}>
+          <h4>Author:</h4>
+          <p>{Blog && Blog.author}</p>
+        </div>
+        <div className={styles.subContent}>
+          <h4>Last Updated:</h4>
+          <p>{Blog && new Date(Blog.updatedAt).toUTCString()}</p>
+        </div>
       </div>
-      <div className={styles.subContent}>
-        <h4>Last Updated:</h4>
-        <p>{Blog && new Date(Blog.updatedAt).toUTCString()}</p>
-      </div>
-    </div>
+    </>
   );
 };
 
@@ -81,7 +89,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   // // With Strapi API
   // Fetch data from external API
-  console.log(context.params?.slug)
+  console.log(context.params?.slug);
   const res = await fetch(
     `http://localhost:1337/api/posts/slug/${context.params?.slug}`
   );

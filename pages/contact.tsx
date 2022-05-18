@@ -3,8 +3,14 @@ import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import styles from "../styles/Contact.module.css";
 import { apolloCon } from "../apolloCon";
+import { NextSeo } from "next-seo";
+import seoConfig from "../config/next-seo.config";
 
 const Contact = () => {
+  const SEO = {
+    title: seoConfig.title,
+    titleTemplate: "%s | Contact",
+  };
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
@@ -72,54 +78,59 @@ const Contact = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Contact Us</h1>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          className={styles.formFields}
-          label="Full Name"
-          value={name}
-          onChange={handleChange}
-          name="name"
-          fullWidth
-          autoComplete="none"
-        />
-        <TextField
-          className={styles.formFields}
-          label="Email"
-          value={email}
-          onChange={handleChange}
-          name="email"
-          fullWidth
-          autoComplete="none"
-        />
-        <TextField
-          className={styles.formFields}
-          label="Phone"
-          value={phone}
-          onChange={handleChange}
-          name="phone"
-          fullWidth
-          autoComplete="none"
-        />
-        <TextField
-          className={styles.formFields}
-          label="Message"
-          value={message}
-          onChange={handleChange}
-          name="message"
-          fullWidth
-          multiline
-          rows={5}
-          autoComplete="none"
-        />
-        <Button variant="contained" type="submit">
-          Submit
-        </Button>
-        &nbsp;
-        <Button variant="contained" onClick={handleReset}>Reset</Button>
-      </form>
-    </div>
+    <>
+    <NextSeo {...SEO}/>
+      <div className={styles.container}>
+        <h1>Contact Us</h1>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            className={styles.formFields}
+            label="Full Name"
+            value={name}
+            onChange={handleChange}
+            name="name"
+            fullWidth
+            autoComplete="none"
+          />
+          <TextField
+            className={styles.formFields}
+            label="Email"
+            value={email}
+            onChange={handleChange}
+            name="email"
+            fullWidth
+            autoComplete="none"
+          />
+          <TextField
+            className={styles.formFields}
+            label="Phone"
+            value={phone}
+            onChange={handleChange}
+            name="phone"
+            fullWidth
+            autoComplete="none"
+          />
+          <TextField
+            className={styles.formFields}
+            label="Message"
+            value={message}
+            onChange={handleChange}
+            name="message"
+            fullWidth
+            multiline
+            rows={5}
+            autoComplete="none"
+          />
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
+          &nbsp;
+          <Button variant="contained" onClick={handleReset}>
+            Reset
+          </Button>
+        </form>
+      </div>
+    </>
   );
 };
 

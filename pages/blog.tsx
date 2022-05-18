@@ -5,6 +5,8 @@ import { IBlog, IPropDataArray } from "../interfaces/blog.interface";
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import * as fs from "fs";
 import BlogPrview from "../components/BlogPreview";
+import { NextSeo } from "next-seo";
+import seoConfig from "../config/next-seo.config";
 
 // NOTE: Comment any of one rendering function
 
@@ -15,13 +17,20 @@ import BlogPrview from "../components/BlogPreview";
  *
  */
 const Blog = (props: IPropDataArray) => {
+  const SEO = {
+    title: seoConfig.title,
+    titleTemplate: "%s | Blogs",
+  };
   const [Blogs, setBlogs] = useState(props.allBlogs);
 
   return (
-    <div className={styles.blogPage}>
-      <h2>All Blogs</h2>
-      <BlogPrview allBlogs={Blogs} />
-    </div>
+    <>
+      <NextSeo {...SEO} />
+      <div className={styles.blogPage}>
+        <h2>All Blogs</h2>
+        <BlogPrview allBlogs={Blogs} />
+      </div>
+    </>
   );
 };
 

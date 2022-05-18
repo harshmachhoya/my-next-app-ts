@@ -13,3 +13,9 @@ export interface IMedia {
     height: number,
     layout: "fixed" | "fill" | "intrinsic" | "responsive" | "raw" | undefined
 }
+
+export interface ISEO {
+    id: number,
+    metaTitle: string,
+    metaDescription: string
+}

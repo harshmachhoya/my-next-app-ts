@@ -1,3 +1,5 @@
+import { ISEO } from "./common.interface"
+
 export interface IHomePage {
     id: number,
     attributes: {
@@ -7,7 +9,8 @@ export interface IHomePage {
         "updatedAt": Date,
         "publishedAt": Date,
         "locale": string,
-        "photo": IImage
+        "photo": IImage,
+        "seo": ISEO
     }
 }
 export interface IImage {
