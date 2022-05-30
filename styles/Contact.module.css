@@ -1,12 +1,12 @@
 .container {
     max-width: max-content;
     margin: auto;
+    padding: 1rem;
 }
 
 .formFields {
-   padding-bottom: 1rem;
+   padding-bottom: 15px;
 }
-
 
 .formlabel {
     margin: 0px 14px;

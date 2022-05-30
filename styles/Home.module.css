@@ -24,17 +24,6 @@
   flex-grow: 1;
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
-
 .title {
   margin: 0;
   line-height: 1.15;
@@ -110,13 +99,17 @@
 }
 
 .mainnav {
-  position: fixed;
   top: 0;
   width: 100%;
   background-color: darkslategrey;
 }
 
-.mainnav ul {
+.mainnav a{
+  color: #eaeaea;
+  padding: 1rem;
+}
+
+/* .mainnav ul {
   display: flex;
   justify-content: center;
   margin-top: 50px;
@@ -127,6 +120,10 @@
   margin: 0 24px;
   list-style: none;
   font-weight: bold;
+} */
+
+.container {
+  padding: 1rem 2rem;
 }
 
 .myImg {

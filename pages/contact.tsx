@@ -5,6 +5,7 @@ import styles from "../styles/Contact.module.css";
 import { apolloCon } from "../apolloCon";
 import { NextSeo } from "next-seo";
 import seoConfig from "../config/next-seo.config";
+import { POST_CONTACT } from "../graphql/queries";
 
 const Contact = () => {
   const SEO = {
@@ -19,31 +20,11 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = { name, phone, email, message };
-    console.log("Body", data);
+    // console.log("Body", data);
 
     apolloCon
       .mutate({
-        mutation: gql`
-          mutation (
-            $name: String
-            $email: String
-            $phone: String
-            $message: String
-          ) {
-            createContactUs(
-              data: {
-                name: $name
-                email: $email
-                phone: $phone
-                message: $message
-              }
-            ) {
-              data {
-                id
-              }
-            }
-          }
-        `,
+        mutation: POST_CONTACT,
         variables: { ...data },
       })
       .then((d) => {
@@ -79,7 +60,7 @@ const Contact = () => {
 
   return (
     <>
-    <NextSeo {...SEO}/>
+      <NextSeo {...SEO} />
       <div className={styles.container}>
         <h1>Contact Us</h1>
         <form onSubmit={handleSubmit}>

@@ -11,14 +11,22 @@ a {
   text-decoration: none;
 }
 
+/* a {
+  color: #0070f3;
+  text-decoration: none;
+} */
+
+.a:hover,
+.a:focus,
+.a:active {
+  text-decoration: underline;
+  color: #0070f3;
+}
+
 * {
   box-sizing: border-box;
 }
 
 p {
   white-space: pre-line;
-}
-
-.container {
-  padding: 7rem 2rem;
 }

@@ -1,3 +1,4 @@
+import { GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
 import React from "react";
 import ReactMarkdown from "react-markdown";
@@ -29,11 +30,11 @@ const About = ({ aboutPageData }: { aboutPageData: IAboutPage }) => {
 
 export default About;
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async (context) => {
   const { data, loading, error } = await apolloCon.query({
     query: GET_ABOUT_PAGE,
   });
   // console.log(JSON.stringify(data.aboutPage.data.attributes, null, 4));
 
   return { props: { aboutPageData: data.aboutPage.data.attributes } };
-}
+};

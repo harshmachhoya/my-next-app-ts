@@ -7,6 +7,8 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import NextImage from "../components/Image";
 import { NextSeo } from "next-seo";
+import { apolloCon } from "../apolloCon";
+import { GET_NAVIGATION } from "../graphql/queries";
 
 const Home = (props: IIndexPage) => {
   const SEO = {
@@ -33,19 +35,20 @@ const Home = (props: IIndexPage) => {
       </Head> */}
 
       <NextSeo {...SEO} />
-      <main className={styles.main}>
-        <h1 className={styles.title}>{props.homePage.attributes.title}</h1>
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <h1 className={styles.title}>{props.homePage.attributes.title}</h1>
 
-        <div className={styles.imagewrap}>
-          <NextImage
-            layout="raw"
-            className={styles.myImg}
-            width={237}
-            height={158}
-            alternativetext="Home image"
-            url={props.homePage.attributes.photo.data.attributes.url}
-          />
-          {/* <Image
+          <div className={styles.imagewrap}>
+            <NextImage
+              layout="raw"
+              className={styles.myImg}
+              width={237}
+              height={158}
+              alternativetext="Home image"
+              url={props.homePage.attributes.photo.data.attributes.url}
+            />
+            {/* <Image
             className={styles.myImg}
             src={`http://localhost:1337${props.homePage.attributes.photo.data.attributes.url}`}
             width={237}
@@ -53,18 +56,21 @@ const Home = (props: IIndexPage) => {
             alt="Home image"
             layout="raw"
           /> */}
-          {/* <img
+            {/* <img
             className={styles.myImg}
             src={`http://localhost:1337${props.homePage.attributes.photo.data.attributes.url}`}
             width={237}
             height={158}
             alt="Home image"
           /> */}
-        </div>
-        <p className={styles.description}>{props.homePage.attributes.quotes}</p>
-        <LatestBlogs allBlogs={props.allBlogs} />
-      </main>
-      <footer className={styles.footer}></footer>
+          </div>
+          <p className={styles.description}>
+            {props.homePage.attributes.quotes}
+          </p>
+          <LatestBlogs allBlogs={props.allBlogs} />
+        </main>
+        <footer className={styles.footer}></footer>
+      </div>
     </div>
   );
 };
@@ -90,7 +96,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const { data: homePage } = await resHomePage.json();
   // console.log("homepage", JSON.stringify(homePage, null, 4));
   // Pass allBlogs to the page via props
-  return { props: { allBlogs, homePage } };
+  return {
+    props: { allBlogs, homePage },
+  };
 };
 
 /**
