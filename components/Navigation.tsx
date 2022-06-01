@@ -9,6 +9,8 @@ import {
   Link,
   Menu,
   MenuItem,
+  Popover,
+  Popper,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -62,7 +64,42 @@ export const Navigation = ({ navigation }: { navigation: INavItem[] }) => {
                 {item.title}
               </Link>
             </Button>
-            <Menu
+            <Popover
+              id={open ? "simple-popover" : undefined}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+            >
+              <div className={styles.menuContainer}>
+                {item.items.map((linkItem: INavItem, index: number) => (
+                  <>
+                    <div className={styles.menuColumn}>
+                      <h4>{linkItem.title}</h4>
+                      {linkItem.items.length > 0 &&
+                        linkItem.items.map((item: INavItem, index: number) => (
+                          <Link
+                            className={styles.subLink}
+                            key={index}
+                            href={item.path}
+                            underline="hover"
+                          >
+                            {item.title}
+                          </Link>
+                        ))}
+                    </div>
+                  </>
+                ))}
+              </div>
+            </Popover>
+            {/* <Menu
               key={index}
               id="basic-menu"
               anchorEl={anchorEl}
@@ -74,12 +111,17 @@ export const Navigation = ({ navigation }: { navigation: INavItem[] }) => {
             >
               {item.items.map((item: INavItem, index: number) => (
                 <MenuItem key={index} onClick={handleClose}>
-                  <Link className={styles.subLink} key={index} href={item.path} underline="none">
+                  <Link
+                    className={styles.subLink}
+                    key={index}
+                    href={item.path}
+                    underline="none"
+                  >
                     {item.title}
                   </Link>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </>
         )
       )}

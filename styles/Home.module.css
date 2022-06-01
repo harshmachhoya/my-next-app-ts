@@ -110,8 +110,22 @@
   padding: 0.8rem;
 }
 
+.menuContainer {
+  max-width: 1260px;
+  display: flex;
+  padding: 1rem;
+}
+
+.menuColumn {
+  flex: auto;
+  width: 25%;
+}
+
 .subLink {
   color: black;
+  display: flex;
+  margin: 0.5rem 1rem 0px 0px;
+  width: max-content;
 }
 
 /* .mainnav ul {
@@ -137,8 +151,4 @@
 
 .imagewrap {
   padding: 30px 0px;
-}
-
-.landingPage {
-  z-index: 1;
 }

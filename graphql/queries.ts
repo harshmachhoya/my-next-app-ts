@@ -29,10 +29,7 @@ query {
 
 export const GET_NAVIGATION = gql`
 query {
-  renderNavigation(
-    navigationIdOrSlug: "navigation-2"
-    type: TREE
-  ) {
+  renderNavigation(navigationIdOrSlug: "navigation-2", type: TREE) {
     id
     title
     path
@@ -40,11 +37,11 @@ query {
       id
       title
       path
-    }
-    items {
-      id
-      title
-      path
+      items {
+        id
+        title
+        path
+      }
     }
   }
 }`
