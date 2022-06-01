@@ -41,6 +41,11 @@ query {
       title
       path
     }
+    items {
+      id
+      title
+      path
+    }
   }
 }`
 

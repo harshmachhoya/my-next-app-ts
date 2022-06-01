@@ -26,9 +26,5 @@ export interface INavItem {
     id: number,
     title: string,
     path: string,
-    items?: INavItem[]
-}
-
-export interface INavigation {
-    navItem: INavItem[]
+    items: INavItem[]
 }

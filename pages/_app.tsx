@@ -1,20 +1,21 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import type { AppContext, AppProps } from "next/app";
 import { Navigation } from "../components/Navigation";
 import { ApolloProvider } from "@apollo/client";
 import React from "react";
 import { apolloCon } from "../apolloCon";
 import { DefaultSeo } from "next-seo";
 import seoConfig from "../config/next-seo.config";
-import { hydrateFetchStore } from "../src/myFetch";
+import App from "next/app";
+import { GET_NAVIGATION } from "../graphql/queries";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // hydrateFetchStore(fetchStore);
+  const { navigation } = pageProps;
   return (
     <>
       <DefaultSeo {...seoConfig} />
       <ApolloProvider client={apolloCon}>
-        <Navigation />
+        <Navigation navigation={navigation} />
         <Component {...pageProps} />
       </ApolloProvider>
     </>
@@ -32,14 +33,17 @@ export default MyApp;
 //   return { props: { navigation: data } };
 // };
 
-// MyApp.getInitialProps = async () => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const { data, loading, error } = await apolloCon.query({
-//     query: GET_NAVIGATION,
-//   });
-//   // console.log("Navigation", JSON.stringify(data.renderNavigation, null, 4));
-
-//   return { navigation: data.renderNavigation };
-
-//   // return { ...appProps };
-// };
+// getInitialProps disables automatic static optimization for pages that don't
+// have getStaticProps. So article, category and home pages still get SSG.
+// Hopefully we can replace this with getStaticProps once this issue is fixed:
+// https://github.com/vercel/next.js/discussions/10949
+MyApp.getInitialProps = async (context: AppContext) => {
+  // Calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(context);
+  // Fetch global site settings from Strapi
+  const { data } = await apolloCon.query({
+    query: GET_NAVIGATION,
+  });
+  // Pass the data to our page via props
+  return { ...appProps, pageProps: { navigation: data.renderNavigation } };
+};

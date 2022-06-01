@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { Button, TextField } from "@mui/material";
+import { Alert, AlertColor, Button, Snackbar, TextField } from "@mui/material";
 import React, { useState } from "react";
 import styles from "../styles/Contact.module.css";
 import { apolloCon } from "../apolloCon";
@@ -16,12 +16,30 @@ const Contact = () => {
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
   const [message, setmessage] = useState("");
+  const [open, setOpen] = useState(false);
+  const [severity, setSeverity] = useState<AlertColor | undefined>();
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = { name, phone, email, message };
     // console.log("Body", data);
-
+    if (data.message.length <= 10) {
+      setSeverity("warning");
+      setAlertMessage("Please put a message more than 10 characters!");
+      setOpen(true);
+      return;
+    }
     apolloCon
       .mutate({
         mutation: POST_CONTACT,
@@ -29,8 +47,11 @@ const Contact = () => {
       })
       .then((d) => {
         console.log("Success response:", d);
+        setSeverity("success");
+        setAlertMessage("Thanks for contacting us");
+        setOpen(true);
         handleReset();
-        alert("Thanks for contacting us");
+        // alert("Thanks for contacting us");
       })
       .catch((e) => {
         console.log("Error", e);
@@ -60,6 +81,15 @@ const Contact = () => {
 
   return (
     <>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      {/* <Alert severity="error">This is an error message!</Alert>
+      <Alert severity="warning">This is a warning message!</Alert>
+      <Alert severity="info">This is an information message!</Alert>
+      <Alert severity="success">This is a success message!</Alert> */}
       <NextSeo {...SEO} />
       <div className={styles.container}>
         <h1>Contact Us</h1>
@@ -72,6 +102,7 @@ const Contact = () => {
             name="name"
             fullWidth
             autoComplete="none"
+            required
           />
           <TextField
             className={styles.formFields}
@@ -81,6 +112,7 @@ const Contact = () => {
             name="email"
             fullWidth
             autoComplete="none"
+            required
           />
           <TextField
             className={styles.formFields}
@@ -101,6 +133,7 @@ const Contact = () => {
             multiline
             rows={5}
             autoComplete="none"
+            required
           />
           <Button variant="contained" type="submit">
             Submit

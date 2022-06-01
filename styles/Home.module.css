@@ -99,14 +99,19 @@
 }
 
 .mainnav {
+  text-align: center;
   top: 0;
   width: 100%;
   background-color: darkslategrey;
 }
 
-.mainnav a{
+.link {
   color: #eaeaea;
-  padding: 1rem;
+  padding: 0.8rem;
+}
+
+.subLink {
+  color: black;
 }
 
 /* .mainnav ul {
@@ -132,4 +137,8 @@
 
 .imagewrap {
   padding: 30px 0px;
+}
+
+.landingPage {
+  z-index: 1;
 }
