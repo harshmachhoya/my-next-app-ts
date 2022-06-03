@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Blog.module.css";
+import styles from "../../styles/Blog.module.css";
 import Link from "next/link";
-import { IPropDataArray, IBlog } from "../interfaces/blog.interface";
+import { IBlog, IPropDataArray } from "../../interfaces/blog.interface";
 
 const BlogPrview = ({ allBlogs }: IPropDataArray) => {
   return (

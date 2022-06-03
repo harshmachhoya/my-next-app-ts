@@ -73,7 +73,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
   // // With static JSON file
   //   return {

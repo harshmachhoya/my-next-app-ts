@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Home.module.css";
+// import styles from "../styles/Home.module.css";
+import styles from "../../../styles/Home.module.css";
 // import Link from "next/link";
 import {
   BottomNavigation,
@@ -16,9 +17,28 @@ import HomeIcon from "@mui/icons-material/Home";
 import BusinessIcon from "@mui/icons-material/Business";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import AddCommentIcon from "@mui/icons-material/AddComment";
-import { INavItem } from "../interfaces/common.interface";
+import { INavigation, INavItem } from "../../../interfaces/common.interface";
 
-export const Navigation = ({ navigation }: { navigation: INavItem[] }) => {
+export const MenuItemBox = (linkItem: INavItem) => {
+  return (
+    <div className={styles.menuColumn}>
+      <h4 className={styles.navTitle}>{linkItem.title}</h4>
+      {linkItem.items.length > 0 &&
+        linkItem.items.map((item: INavItem, index: number) => (
+          <Link
+            className={styles.subLink}
+            key={index}
+            href={item.path}
+            underline="hover"
+          >
+            {item.title}
+          </Link>
+        ))}
+    </div>
+  );
+};
+
+export const Navigation = ({ navigation }: INavigation) => {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -81,20 +101,7 @@ export const Navigation = ({ navigation }: { navigation: INavItem[] }) => {
               <div className={styles.menuContainer}>
                 {item.items.map((linkItem: INavItem, index: number) => (
                   <>
-                    <div className={styles.menuColumn}>
-                      <h4>{linkItem.title}</h4>
-                      {linkItem.items.length > 0 &&
-                        linkItem.items.map((item: INavItem, index: number) => (
-                          <Link
-                            className={styles.subLink}
-                            key={index}
-                            href={item.path}
-                            underline="hover"
-                          >
-                            {item.title}
-                          </Link>
-                        ))}
-                    </div>
+                    <MenuItemBox {...linkItem} />
                   </>
                 ))}
               </div>

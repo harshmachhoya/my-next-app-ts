@@ -1,11 +1,11 @@
 import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import LatestBlogs from "../components/LatestBlogs";
+import LatestBlogs from "../src/components/LatestBlogs";
 import { IPropDataArray } from "../interfaces/blog.interface";
 import { IIndexPage } from "../interfaces/common.interface";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import NextImage from "../components/Image";
+import NextImage from "../src/components/Image";
 import { NextSeo } from "next-seo";
 import { apolloCon } from "../apolloCon";
 import { GET_NAVIGATION } from "../graphql/queries";
@@ -83,7 +83,11 @@ export default Home;
  * This gets called on every request
  *
  */
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
   // Fetch data from external API
   const resBlog = await fetch(
     `http://localhost:1337/api/posts?sort[0]=updatedAt:desc&pagination[page]=1&pagination[pageSize]=5`

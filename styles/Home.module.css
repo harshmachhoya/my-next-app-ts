@@ -99,6 +99,7 @@
 }
 
 .mainnav {
+  position: sticky;
   text-align: center;
   top: 0;
   width: 100%;
@@ -106,25 +107,33 @@
 }
 
 .link {
-  color: #eaeaea;
+  color: #eaeaea !important;
   padding: 0.8rem;
 }
 
 .menuContainer {
-  max-width: 1260px;
   display: flex;
-  padding: 1rem;
+  padding: 0.9rem;
 }
 
 .menuColumn {
+  display: inline-table;
   flex: auto;
-  width: 25%;
+  padding: inherit;
+}
+
+.navTitle {
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.99375rem;
+  margin: 0;
 }
 
 .subLink {
-  color: black;
+  color: black !important;
   display: flex;
-  margin: 0.5rem 1rem 0px 0px;
+  margin: 0.5rem 1rem 0px 0px !important;
   width: max-content;
 }
 

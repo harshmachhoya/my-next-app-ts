@@ -3,7 +3,7 @@ import { NextSeo } from "next-seo";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { apolloCon } from "../apolloCon";
-import AboutCard from "../components/AboutCard";
+import AboutCard from "../src/components/AboutCard";
 import seoConfig from "../config/next-seo.config";
 import { GET_ABOUT_PAGE } from "../graphql/queries";
 import { IAboutPage } from "../interfaces/about.interface";

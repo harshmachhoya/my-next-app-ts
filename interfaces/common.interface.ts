@@ -28,3 +28,7 @@ export interface INavItem {
     path: string,
     items: INavItem[]
 }
+
+export interface INavigation {
+    navigation: Array<INavItem>
+}

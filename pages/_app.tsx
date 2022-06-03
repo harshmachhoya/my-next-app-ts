@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import type { AppContext, AppProps } from "next/app";
-import { Navigation } from "../components/Navigation";
 import { ApolloProvider } from "@apollo/client";
 import React from "react";
 import { apolloCon } from "../apolloCon";
@@ -8,6 +7,7 @@ import { DefaultSeo } from "next-seo";
 import seoConfig from "../config/next-seo.config";
 import App from "next/app";
 import { GET_NAVIGATION } from "../graphql/queries";
+import { Navigation } from "../src/components/Navigation/Navigation";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { navigation } = pageProps;

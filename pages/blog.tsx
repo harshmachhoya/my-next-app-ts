@@ -4,7 +4,7 @@ import Link from "next/link";
 import { IBlog, IPropDataArray } from "../interfaces/blog.interface";
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import * as fs from "fs";
-import BlogPrview from "../components/BlogPreview";
+import BlogPrview from "../src/components/BlogPreview";
 import { NextSeo } from "next-seo";
 import seoConfig from "../config/next-seo.config";
 

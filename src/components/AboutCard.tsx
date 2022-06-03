@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../styles/About.module.css";
+import styles from "../../styles/About.module.css";
 import Link from "next/link";
 import NextImage from "./Image";
-import { IAboutPage, IContact } from "../interfaces/about.interface";
+import { IAboutPage, IContact } from "../../interfaces/about.interface";
 
 const AboutCard = ({ contacts }: IAboutPage) => {
   return (

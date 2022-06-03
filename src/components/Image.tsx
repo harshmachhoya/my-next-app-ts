@@ -1,7 +1,7 @@
-import getStrapiMedia from "../utils/media";
+import getStrapiMedia from "../../utils/media";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import { IMedia } from "../interfaces/common.interface";
+import { IMedia } from "../../interfaces/common.interface";
 
 const NextImage = (props: IMedia) => {
   const { width, height, url, alternativetext, layout } = props;
